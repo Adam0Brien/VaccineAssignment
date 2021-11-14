@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@ca.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adamobrien.vaccineassignment.Controllers.MainController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+          <TabPane prefHeight="400.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Centers">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="centerName" layoutX="50.0" layoutY="49.0" promptText="Name" />
+                              <TextField fx:id="address" layoutX="50.0" layoutY="96.0" promptText="Address" />
+                              <TextField fx:id="eircode" layoutX="50.0" layoutY="147.0" promptText="Eircode" />
+                              <TextField fx:id="parkingSpaces" layoutX="50.0" layoutY="201.0" promptText="Parking Spaces" />
+                              <Button fx:id="addCenter" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addCenterDetails" text="Add" />
+                              <Button fx:id="deleteCenter" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" text="Delete" />
+                              <Button fx:id="refreshCenter" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" onAction="#refreshCenter" text="Refresh" />
+                              <Button fx:id="resetCenter" layoutX="127.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetCenters" text="Reset" />
+                               <Button fx:id="resetAll" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteEverything" text="Kill Switch" />
+                               <ListView fx:id="centerListView" layoutX="274.0" layoutY="47.0" prefHeight="293.0" prefWidth="298.0" />
+                               <Label fx:id="centerListNo" layoutX="300.0" layoutY="340.0" prefHeight="26.0" prefWidth="178.0" text="There are 0 centers" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Booths">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="boothNumber" layoutX="50.0" layoutY="96.0" promptText="BoothNumber" />
+                              <TextField fx:id="floorLevel" layoutX="50.0" layoutY="147.0" promptText="Floor" />
+                               <Button fx:id="addBooth" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addBoothDetails" text="Add" />
+                               <Button fx:id="deleteBooth" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" text="Delete" />
+                               <Button fx:id="refreshBooth" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" text="Refresh" />
+                               <Button fx:id="resetBooth" layoutX="127.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetBooths" text="Reset" />
+                              <ListView fx:id="boothListView" layoutX="274.0" layoutY="47.0" onEditStart="#addBoothDetails" prefHeight="293.0" prefWidth="298.0" />
+                              <ChoiceBox fx:id="centerChoiceBox" layoutX="50.0" layoutY="47.0" prefWidth="150.0" />
+                              <TextField fx:id="accessibility" layoutX="50.0" layoutY="201.0" prefWidth="150.0" promptText="Accesibility" />
+                            <Label fx:id="boothListNo" layoutX="300.0" layoutY="340.0" prefHeight="26.0" prefWidth="178.0" text="There are 0 Booths" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Patients">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="patientName" layoutX="50.0" layoutY="83.0" promptText="Name" />
+                              <TextField fx:id="email" layoutX="50.0" layoutY="161.0" promptText="Email" />
+                              <TextField fx:id="ppsNumber" layoutX="50.0" layoutY="201.0" promptText="PPS Number" />
+                               <DatePicker fx:id="DOB" layoutX="50.0" layoutY="124.0" prefHeight="25.0" prefWidth="151.0" promptText="Date of Birth" />
+                               <Button fx:id="addPatient" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addPatientDetails" text="Add" />
+                               <Button fx:id="deletePatient" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" onAction="#deletePatientDetails" text="Delete" />
+                               <Button fx:id="refreshPatient" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" onAction="#refreshPatientDetails" text="Refresh" />
+                               <Button fx:id="resetPatient" layoutX="127.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetPatients" text="Reset" />
+                              <ListView fx:id="patientListView" layoutX="274.0" layoutY="47.0" onEditStart="#addPatientDetails" prefHeight="293.0" prefWidth="298.0" />
+                              <ChoiceBox fx:id="boothChoiceBox" layoutX="50.0" layoutY="41.0" prefWidth="150.0" />
+                               <Label fx:id="patientListNo" layoutX="300.0" layoutY="340.0" prefHeight="26.0" prefWidth="178.0" text="There are 0 patients" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab onSelectionChanged="#vaccineAndTime" text="Appointment">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="addAppointment" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addAppointmentDetails" text="Add" />
+                              <Button fx:id="deleteAppointment" layoutX="129.0" layoutY="253.0" mnemonicParsing="false" text="Delete" />
+                              <Button fx:id="resetAppointment" layoutX="100.0" layoutY="298.0" mnemonicParsing="false" onAction="#resetAppointments" text="Reset" />
+                              <ListView fx:id="appointmentListView" layoutX="274.0" layoutY="47.0" prefHeight="293.0" prefWidth="298.0" />
+                              <ChoiceBox fx:id="patientChoiceBox" layoutX="53.0" layoutY="47.0" prefWidth="150.0" />
+                              <ChoiceBox fx:id="timeChoiceBox" layoutX="54.0" layoutY="105.0" prefWidth="150.0" />
+                              <ChoiceBox fx:id="vaccineChoiceBox" layoutX="54.0" layoutY="168.0" prefWidth="150.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Vaccination Record">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="searchListView" layoutX="274.0" layoutY="47.0" prefHeight="293.0" prefWidth="298.0" />
+                              <Button layoutX="224.0" layoutY="169.0" mnemonicParsing="false" onAction="#searchVaccinationRecord" prefHeight="24.0" prefWidth="27.0" text="&gt;" />
+                              <TextField fx:id="search" layoutX="75.0" layoutY="169.0" promptText="Search" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

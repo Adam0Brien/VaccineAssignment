@@ -1,0 +1,9 @@
+ Plan for models:
+
+
+Patient - Stores patient data.
+
+Booths - Stores patient objects and a boothID
+
+vaxCenter - Stores booth objects and a Location(string)
+

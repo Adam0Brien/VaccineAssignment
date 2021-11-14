@@ -1,0 +1,7 @@
+I need to make the booth class take in patient objects that contain patient data
+
+make vaxCenter take in booth objects that contain booth+patient data
+
+Display this data on listview
+
+
