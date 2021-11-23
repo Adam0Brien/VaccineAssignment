@@ -10,8 +10,8 @@ public class LinkedList<E> implements Iterable<E> {
      * Adding and deleting head(most recently added) elements works fine
      *
      * -Work on
-     *      size()
-     *      clear()
+     *
+     *
      *      search()
      *      removeRange()
      *      edit()
@@ -26,6 +26,7 @@ public class LinkedList<E> implements Iterable<E> {
         }
      return node.getContents();
     }
+
 
 
 
@@ -54,7 +55,29 @@ public class LinkedList<E> implements Iterable<E> {
         }
     }
 
-    public LinkedList<E> getList(){
+    //Method to delete a node in the LinkedList by KEY
+    public static void deleteByKey(LinkedList list,
+                                   int key) {
+        // Store head node
+        LinkedNode currNode = list.head, prev = null;
+
+        //
+        // CASE 1:
+        // If head node itself holds the key to be deleted
+
+        if (currNode != null && currNode.data == key) {
+            list.head = currNode.next; // Changed head
+
+            // Display the message
+            System.out.println(key + " found and deleted");
+
+            // Return the updated List
+        }
+    }
+
+
+
+        public LinkedList<E> getList(){
         return this;
     }
 
@@ -135,6 +158,30 @@ public class LinkedList<E> implements Iterable<E> {
         };
 
     }
+
+
+    public boolean isEmpty(){
+
+        if(listLength() <= 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+
+  //  public E indexOf(LinkedList list)
+  //  {
+//        LinkedNode temp = head; // make a copy of the head
+//        int counter = 0;
+//        while (temp != null)  //while there is a node after the head
+//        {
+//            counter++; //the counter will start counting
+//            temp = temp.next; //then when the head
+//        }
+//        return counter;  // when there is nothing in front of the head it returns how many nodes were counted
+   // }
 
 
 //

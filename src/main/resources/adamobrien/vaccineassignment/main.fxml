@@ -68,13 +68,13 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Booths">
+                  <Tab fx:id="boothTab" text="Booths">
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <TextField fx:id="boothNumber" layoutX="50.0" layoutY="96.0" promptText="BoothNumber" />
                               <TextField fx:id="floorLevel" layoutX="50.0" layoutY="147.0" promptText="Floor" />
-                               <Button fx:id="addBooth" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addBoothDetails" text="Add" />
+                               <Button fx:id="addBooth" layoutX="60.0" layoutY="253.0" mnemonicParsing="false" onAction="#addBoothDetails" text="Add" />
                                <Button fx:id="deleteBooth" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" text="Delete" />
                                <Button fx:id="refreshBooth" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" text="Refresh" />
                                <Button fx:id="resetBooth" layoutX="127.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetBooths" text="Reset" />
@@ -109,13 +109,16 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="addAppointment" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addAppointmentDetails" text="Add" />
-                              <Button fx:id="deleteAppointment" layoutX="129.0" layoutY="253.0" mnemonicParsing="false" text="Delete" />
-                              <Button fx:id="resetAppointment" layoutX="100.0" layoutY="298.0" mnemonicParsing="false" onAction="#resetAppointments" text="Reset" />
-                              <ListView fx:id="appointmentListView" layoutX="274.0" layoutY="47.0" prefHeight="293.0" prefWidth="298.0" />
+                              <Button fx:id="addAppointment" layoutX="61.0" layoutY="266.0" mnemonicParsing="false" onAction="#addAppointmentDetails" text="Add" />
+                              <Button fx:id="deleteAppointment" layoutX="137.0" layoutY="266.0" mnemonicParsing="false" text="Cancel" />
+                              <ListView fx:id="appointmentListView" layoutX="239.0" layoutY="47.0" prefHeight="281.0" prefWidth="176.0" />
                               <ChoiceBox fx:id="patientChoiceBox" layoutX="53.0" layoutY="47.0" prefWidth="150.0" />
                               <ChoiceBox fx:id="timeChoiceBox" layoutX="54.0" layoutY="105.0" prefWidth="150.0" />
                               <ChoiceBox fx:id="vaccineChoiceBox" layoutX="54.0" layoutY="168.0" prefWidth="150.0" />
+                              <ListView layoutX="443.0" layoutY="47.0" prefHeight="281.0" prefWidth="183.0" />
+                              <Label layoutX="296.0" layoutY="22.0" text="Pending" />
+                              <Label layoutX="498.0" layoutY="22.0" text="Complete" />
+                              <Button layoutX="296.0" layoutY="328.0" mnemonicParsing="false" text="Giga Vax" />
                            </children>
                         </AnchorPane>
                      </content>

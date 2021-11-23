@@ -1,5 +1,6 @@
 package adamobrien.vaccineassignment.Models;
 
+import adamobrien.vaccineassignment.ADT.LinkedList;
 import adamobrien.vaccineassignment.Utils.Utilities;
 
 import java.util.Objects;
@@ -12,7 +13,6 @@ public class Appointment {
 
 
     public Appointment(int time, String vaccine) {
-
 
         this.time = time;
 

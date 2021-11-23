@@ -7,7 +7,8 @@
     public  class Patient {
 
         public String name,DOB, email, ppsNumber;
-        public LinkedList<Vaccine> vaccine;
+        public LinkedList<VaccineRecord> vaccine;
+        public LinkedList<VaccineRecord> record;
 
 
 
@@ -16,7 +17,7 @@
 
         // vr = vaccination record (each patient can have multiple vaccines)
 
-        public Patient(String name,String DOB, String email, String ppsNumber, LinkedList vaccine) {
+        public Patient(String name,String DOB, String email, String ppsNumber) {
             if (Utilities.max15Chars(name)) {
                 this.name = name;
             } else {
@@ -41,8 +42,7 @@
                 this.DOB = "1-Jan-2000";
             }
 
-            this.vaccine = vaccine;
-
+            this.record = new LinkedList<>();
 
 
 

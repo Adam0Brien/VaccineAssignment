@@ -3,6 +3,7 @@ package adamobrien.vaccineassignment.ADT;//package ADT;
 public class LinkedNode<N> {
 
     public LinkedNode<N> next=null;
+    public int data;
     private N contents; //ADT reference!
 
     public N getContents() {

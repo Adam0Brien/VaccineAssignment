@@ -15,8 +15,8 @@ class PatientTest {
 
     @BeforeEach
     void setUp() {
-        patientZero = new Patient("Adam O'Brien","20-Sep-2002","adamobrien180@gmail.com","1234321AZ",appointments);
-        testValidation = new Patient("MyNameIsTooLongForThis","Once a year Probably!","emailathotmaildotcom","123456543rtreg",appointments);
+        patientZero = new Patient("Adam O'Brien","20-Sep-2002","adamobrien180@gmail.com","1234321AZ");
+        testValidation = new Patient("MyNameIsTooLongForThis","Once a year Probably!","emailathotmaildotcom","123456543rtreg");
     }
 
     @Test

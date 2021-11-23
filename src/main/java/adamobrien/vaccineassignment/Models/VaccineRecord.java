@@ -1,12 +1,14 @@
 package adamobrien.vaccineassignment.Models;
 
 
+import adamobrien.vaccineassignment.ADT.LinkedList;
 import adamobrien.vaccineassignment.Utils.Utilities;
 
-public class Vaccine{
+public class VaccineRecord {
 
         public String type;
         public int batchNo;
+
 
     /**
      *  If a patient has some sort of vaccine details searching for vaccinated patients would be easier
@@ -19,7 +21,7 @@ public class Vaccine{
 
 
 
-    public Vaccine( String type , int batchNo){
+    public VaccineRecord(String type , int batchNo){
 
 
         if(Utilities.max15Chars(type)){
@@ -28,16 +30,13 @@ public class Vaccine{
             this.type = " ";
         }
 
-
-
         if(Utilities.validBatchNo(batchNo)){
             this.batchNo = batchNo;
         }else{
             this.batchNo = 0;
         }
-
-
     }
+
 
     public String getType() {
         return type;

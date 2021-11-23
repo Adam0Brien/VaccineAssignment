@@ -7,6 +7,7 @@ import adamobrien.vaccineassignment.Models.Patient;
 import adamobrien.vaccineassignment.Models.VaxCenter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
@@ -22,7 +23,14 @@ public class MainController {
         this.booths = new LinkedList<>();
         this.patients = new LinkedList<>();
         this.appointments = new LinkedList<>();
+
     }
+
+    public void initialize(){
+
+        boothTab.setDisable(true);
+    }
+
 
 
 
@@ -34,6 +42,8 @@ public class MainController {
     @FXML private TextField patientName,email,ppsNumber; //patient
     @FXML private DatePicker DOB; //patient
     @FXML private Label patientListNo;
+
+    @FXML private Tab boothTab;
 
     public LinkedList<Patient> getPatients() {
         return patients;
@@ -69,7 +79,7 @@ public class MainController {
 
         //backend adding of patients
 
-        addPatient(new Patient(patientName.getText(),ppsNumber.getText(),email.getText(), DOB.getId(), appointments));
+        addPatient(new Patient(patientName.getText(),ppsNumber.getText(),email.getText(), DOB.getId()));
         System.out.println(patientName.getText()+"\n"+ppsNumber.getText()+"\n"+email.getText() +"\n"+ DOB.getId());
 
         //counts the patients
@@ -83,6 +93,7 @@ public class MainController {
 
              patientChoiceBox.getItems().addAll(patients.get(i).name);
         }
+
     }
 
     /**
@@ -118,6 +129,22 @@ public class MainController {
     public void refreshPatientDetails(){
         System.out.println(patientListView.getSelectionModel().getSelectedItem() + "\n" + appointments.printList());
     }
+
+
+//    public int searchPatients(String patientName)
+//    {
+//        if (!patients.isEmpty())
+//        {
+//            for (Patient p : patients)
+//            {
+//                if (p.getName().equalsIgnoreCase(patientName))
+//                {
+//                    return patients.indexOf(p);
+//                }
+//            }
+//        }
+//        return -1;
+//    }
 
 
     /**
@@ -244,7 +271,7 @@ public class MainController {
             numberOfCenters();
             centerListNo.setText("There are " + numberOfCenters() + " Centers");
 
-
+            boothTab.setDisable(false);
         }
         public void resetCenters(){
             centerChoiceBox.getItems().clear();
@@ -253,6 +280,8 @@ public class MainController {
             //updates the number of booths
             numberOfCenters();
             centerListNo.setText("There are " + numberOfCenters() + " Centers");
+
+            boothTab.setDisable(true);
 
         }
 
@@ -269,6 +298,7 @@ public class MainController {
             resetBooths();
             resetPatients();
             resetCenters();
+            resetAppointments();
 
         }
 
