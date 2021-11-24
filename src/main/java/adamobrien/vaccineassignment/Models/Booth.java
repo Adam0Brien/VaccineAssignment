@@ -20,30 +20,16 @@ public class Booth {
     public String accessibility;
 
 
+    public Booth(int boothNumber, String floorLevel , String accessibility) {
 
-
-    public Booth(int boothNumber, String floorLevel , String accessibility , LinkedList appointments) {
-
-
-        if(Utilities.validBoothNumber(boothNumber)){
             this.boothNumber = boothNumber;
-        }else{
-            this.boothNumber = 0;
-        }
-        if(Utilities.validFloorLevel(floorLevel)) {
+
             this.floorLevel = floorLevel;
-        }else{
-            this.floorLevel = "Ground";
-        }
 
-
-        if(Utilities.validAccesibility(accessibility)) {
             this.accessibility = accessibility;
-        }else{
-            this.accessibility = "None";
-        }
 
-        this.appointments = appointments;
+
+        this.appointments = new LinkedList<>();
 
 
 
@@ -88,8 +74,7 @@ public class Booth {
         return "booths{" +
                 "boothNumber=" + boothNumber +
                 ", floorLevel=" + floorLevel +
-                ", accessibility='" + accessibility + '\'' +
-                ", patients=" + //patients +
+                ", accessibility='" + accessibility+
                 '}';
     }
 }

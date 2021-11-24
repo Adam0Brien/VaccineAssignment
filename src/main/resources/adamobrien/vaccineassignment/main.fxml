@@ -32,18 +32,10 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@ca.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adamobrien.vaccineassignment.Controllers.MainController">
+<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@ca.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adamobrien.vaccineassignment.Controllers.MainController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -58,7 +50,7 @@
                               <TextField fx:id="eircode" layoutX="50.0" layoutY="147.0" promptText="Eircode" />
                               <TextField fx:id="parkingSpaces" layoutX="50.0" layoutY="201.0" promptText="Parking Spaces" />
                               <Button fx:id="addCenter" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addCenterDetails" text="Add" />
-                              <Button fx:id="deleteCenter" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" text="Delete" />
+                              <Button fx:id="deleteCenter" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" onAction="#removeCenter" text="Delete" />
                               <Button fx:id="refreshCenter" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" onAction="#refreshCenter" text="Refresh" />
                               <Button fx:id="resetCenter" layoutX="127.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetCenters" text="Reset" />
                                <Button fx:id="resetAll" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteEverything" text="Kill Switch" />
@@ -75,7 +67,7 @@
                               <TextField fx:id="boothNumber" layoutX="50.0" layoutY="96.0" promptText="BoothNumber" />
                               <TextField fx:id="floorLevel" layoutX="50.0" layoutY="147.0" promptText="Floor" />
                                <Button fx:id="addBooth" layoutX="60.0" layoutY="253.0" mnemonicParsing="false" onAction="#addBoothDetails" text="Add" />
-                               <Button fx:id="deleteBooth" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" text="Delete" />
+                               <Button fx:id="deleteBooth" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" onAction="#removeBooth" text="Delete" />
                                <Button fx:id="refreshBooth" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" text="Refresh" />
                                <Button fx:id="resetBooth" layoutX="127.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetBooths" text="Reset" />
                               <ListView fx:id="boothListView" layoutX="274.0" layoutY="47.0" onEditStart="#addBoothDetails" prefHeight="293.0" prefWidth="298.0" />
@@ -95,11 +87,10 @@
                               <TextField fx:id="ppsNumber" layoutX="50.0" layoutY="201.0" promptText="PPS Number" />
                                <DatePicker fx:id="DOB" layoutX="50.0" layoutY="124.0" prefHeight="25.0" prefWidth="151.0" promptText="Date of Birth" />
                                <Button fx:id="addPatient" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addPatientDetails" text="Add" />
-                               <Button fx:id="deletePatient" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" onAction="#deletePatientDetails" text="Delete" />
+                               <Button fx:id="deletePatient" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" onAction="#deletePatient" text="Delete" />
                                <Button fx:id="refreshPatient" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" onAction="#refreshPatientDetails" text="Refresh" />
                                <Button fx:id="resetPatient" layoutX="127.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetPatients" text="Reset" />
                               <ListView fx:id="patientListView" layoutX="274.0" layoutY="47.0" onEditStart="#addPatientDetails" prefHeight="293.0" prefWidth="298.0" />
-                              <ChoiceBox fx:id="boothChoiceBox" layoutX="50.0" layoutY="41.0" prefWidth="150.0" />
                                <Label fx:id="patientListNo" layoutX="300.0" layoutY="340.0" prefHeight="26.0" prefWidth="178.0" text="There are 0 patients" />
                            </children>
                         </AnchorPane>
@@ -109,16 +100,16 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="addAppointment" layoutX="61.0" layoutY="266.0" mnemonicParsing="false" onAction="#addAppointmentDetails" text="Add" />
-                              <Button fx:id="deleteAppointment" layoutX="137.0" layoutY="266.0" mnemonicParsing="false" text="Cancel" />
-                              <ListView fx:id="appointmentListView" layoutX="239.0" layoutY="47.0" prefHeight="281.0" prefWidth="176.0" />
-                              <ChoiceBox fx:id="patientChoiceBox" layoutX="53.0" layoutY="47.0" prefWidth="150.0" />
+                              <Button fx:id="addAppointment" layoutX="61.0" layoutY="266.0" mnemonicParsing="false" onAction="#addPendingAppointmentDetails" text="Add" />
+                              <Button fx:id="deleteAppointment" layoutX="137.0" layoutY="266.0" mnemonicParsing="false" onAction="#removePendingAppointment" text="Cancel App" />
+                              <ListView fx:id="pendingAppointmentListView" layoutX="239.0" layoutY="47.0" prefHeight="281.0" prefWidth="176.0" />
+                              <ChoiceBox fx:id="boothChoiceBox" layoutX="53.0" layoutY="47.0" prefWidth="150.0" />
                               <ChoiceBox fx:id="timeChoiceBox" layoutX="54.0" layoutY="105.0" prefWidth="150.0" />
                               <ChoiceBox fx:id="vaccineChoiceBox" layoutX="54.0" layoutY="168.0" prefWidth="150.0" />
-                              <ListView layoutX="443.0" layoutY="47.0" prefHeight="281.0" prefWidth="183.0" />
+                              <ListView fx:id="completedAppointmentListView" layoutX="443.0" layoutY="47.0" prefHeight="281.0" prefWidth="183.0" />
                               <Label layoutX="296.0" layoutY="22.0" text="Pending" />
                               <Label layoutX="498.0" layoutY="22.0" text="Complete" />
-                              <Button layoutX="296.0" layoutY="328.0" mnemonicParsing="false" text="Giga Vax" />
+                              <Button layoutX="296.0" layoutY="328.0" mnemonicParsing="false" onAction="#addCompletedAppointment" text="Giga Vax" />
                            </children>
                         </AnchorPane>
                      </content>

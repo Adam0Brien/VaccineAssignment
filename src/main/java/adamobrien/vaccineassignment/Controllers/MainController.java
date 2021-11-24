@@ -16,34 +16,36 @@ import java.time.format.DateTimeFormatter;
 public class MainController {
 
 
-
     public MainController() {
 
         this.vcenters = new LinkedList<>();
         this.booths = new LinkedList<>();
         this.patients = new LinkedList<>();
-        this.appointments = new LinkedList<>();
+        this.pendingAppointments = new LinkedList<>();
+        this.completedAppointments = new LinkedList<>();
 
     }
 
-    public void initialize(){
+    public void initialize() {
 
         boothTab.setDisable(true);
     }
 
 
-
-
     /**
-     *Patient Methods
+     * Patient Methods
      */
 
     public static LinkedList<Patient> patients;
-    @FXML private TextField patientName,email,ppsNumber; //patient
-    @FXML private DatePicker DOB; //patient
-    @FXML private Label patientListNo;
+    @FXML
+    private TextField patientName, email, ppsNumber; //patient
+    @FXML
+    private DatePicker DOB; //patient
+    @FXML
+    private Label patientListNo;
 
-    @FXML private Tab boothTab;
+    @FXML
+    private Tab boothTab;
 
     public LinkedList<Patient> getPatients() {
         return patients;
@@ -51,10 +53,6 @@ public class MainController {
 
     public void addPatient(Patient person) {
         patients.addElement(person);
-    }
-
-    public void deletePatient(int index) {
-        patients.delete(index);
     }
 
     public void deleteAllPatients() {
@@ -75,46 +73,32 @@ public class MainController {
         String myFormattedDate = myDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
 
         //frontend adding of patients
-        patientListView.getItems().addAll(patientName.getText() + " " + myFormattedDate + " " + email.getText() + " " + ppsNumber.getText() + "\n" + appointments.printList());
+        patientListView.getItems().addAll(patientName.getText() + " " + myFormattedDate + " " + email.getText() + " " + ppsNumber.getText() + "\n" + pendingAppointments.printList());
 
         //backend adding of patients
 
-        addPatient(new Patient(patientName.getText(),ppsNumber.getText(),email.getText(), DOB.getId()));
-        System.out.println(patientName.getText()+"\n"+ppsNumber.getText()+"\n"+email.getText() +"\n"+ DOB.getId());
+        addPatient(new Patient(patientName.getText(), ppsNumber.getText(), email.getText(), DOB.getId()));
+        System.out.println(patientName.getText() + "\n" + ppsNumber.getText() + "\n" + email.getText() + "\n" + DOB.getId());
 
         //counts the patients
         numberOfPatients();
         patientListNo.setText("There are " + numberOfPatients() + " Patients");
+    }
 
+    public void deletePatient() {  //TODO
+        for (int i = 0; i < patients.listLength(); i++) {
+            if (patients.listLength() != 0) { // stops nullPointerException
+                if (patientListView.getSelectionModel().getSelectedItem().contains(patients.get(i).ppsNumber)) ;
 
-        //adds the patients to the appointment tab
-        patientChoiceBox.getItems().clear();
-        for (int i = patients.listLength() - 1; i >=0; i-- ){ //reverse for loop
-
-             patientChoiceBox.getItems().addAll(patients.get(i).name);
+                patients.delete(i);
+                patientListView.getItems().remove(i);
+            }
         }
 
     }
 
-    /**
-     * Delete patientDetails
-     *
-     * Removes from listview + removes object completely
-     *
-     */
 
-    public void deletePatientDetails(){ //TODO
-//
-//          patientlistView    -- deletes listview
-//
-//        patientlistView.getSelectionModel().getSelectedIndex();
-
-        patientListView.getSelectionModel().clearSelection();
-        deletePatient(patientListView.getSelectionModel().getSelectedIndex());
-
-    }
-
-    public void resetPatients(){
+    public void resetPatients() {
         //frontend
         patientListView.getItems().clear();
         //backend
@@ -126,8 +110,8 @@ public class MainController {
         patientListNo.setText("There are " + numberOfPatients() + " Patients");
     }
 
-    public void refreshPatientDetails(){
-        System.out.println(patientListView.getSelectionModel().getSelectedItem() + "\n" + appointments.printList());
+    public void refreshPatientDetails() {
+        System.out.println(patientListView.getSelectionModel().getSelectedItem() + "\n" + pendingAppointments.printList());
     }
 
 
@@ -148,172 +132,209 @@ public class MainController {
 
 
     /**
-     *Booth Methods
+     * Booth Methods
      */
 
-        public LinkedList<Booth> booths;
+    public LinkedList<Booth> booths;
 
-        @FXML private TextField boothNumber , floorLevel , accessibility; //booths
-        @FXML private Label boothListNo;
-        @FXML private ChoiceBox<Object> boothChoiceBox;
+    @FXML
+    private TextField boothNumber, floorLevel, accessibility; //booths
+    @FXML
+    private Label boothListNo;
 
 
+    public LinkedList<Booth> getBooths() {
+        return booths;
+    }
 
-        public LinkedList<Booth> getBooths(){
-            return booths;
+    public void addBooth(Booth booth) {
+
+        booths.addElement(booth);
+    }
+
+    public void deleteAllBooths() {
+        booths.deleteList();
+    }
+
+
+    public int numberOfBooths() {
+        int x = booths.listLength();
+        return x;
+    }
+
+
+    @FXML
+    ListView<String> boothListView;
+
+    public void addBoothDetails(ActionEvent event) {
+        Booth booth = new Booth(Integer.parseInt(boothNumber.getText()), floorLevel.getText(), accessibility.getText());
+        //gui
+        boothListView.getItems().add(booth.toString());
+        //backend
+        addBooth(booth);
+        System.out.println(boothNumber.getText() + "\n" + floorLevel.getText() + "\n" + accessibility.getText());
+        //Adds booth to the dropdown on patient menu
+
+
+        //counts how many booths there are
+        numberOfBooths();
+        boothListNo.setText("There are " + numberOfBooths() + " Booths");
+
+        //adds the booths to the appointment tab
+        boothChoiceBox.getItems().clear();
+        for (int i = booths.listLength() - 1; i >=0; i-- ){ //reverse for loop
+
+            boothChoiceBox.getItems().addAll(booths.get(i).boothNumber);
         }
 
-        public void addBooth(Booth booth){
+    }
 
-            booths.addElement(booth);
-        }
+    public void removeBooth()
+    { //TODO
+        if (booths.listLength() != 0)
+        { // stops nullPointerException
+            for (int i = 0; i < booths.listLength(); i++)
 
-        public void deleteAllBooths(){
-            booths.deleteList();
-        }
-
-
-        public int numberOfBooths(){
-            int x = booths.listLength();
-            return x;
-        }
-
-
-        @FXML
-        ListView<String> boothListView;
-
-        public void addBoothDetails(ActionEvent event) {
-            //gui
-            boothListView.getItems().addAll( "#"+boothNumber.getText() +" Floor "+ floorLevel.getText() + " " + accessibility.getText());
-            //backend
-            addBooth(new Booth(boothNumber.getLength(),floorLevel.getText(),accessibility.getText(),appointments));
-            System.out.println(boothNumber.getText()+"\n"+floorLevel.getText()+"\n"+accessibility.getText());
-            //Adds booth to the dropdown on patient menu
-            boothChoiceBox.getItems().clear();
-            for (int i = booths.listLength() - 1; i >=0; i-- ){ //reverse for loop
-
-                boothChoiceBox.getItems().addAll(booths.get(i).boothNumber);
-            }
-
-
-            //counts how many booths there are
-            numberOfBooths();
-            boothListNo.setText("There are " + numberOfBooths() + " Booths");
-        }
-
-
-
-        public void resetBooths(){
-            boothChoiceBox.getItems().clear();
-            boothListView.getItems().clear();
-            deleteAllBooths();
-            //updates the number of booths and ChoiceBox in patients
-            numberOfBooths();
-            boothListNo.setText("There are " + numberOfBooths() + " Booths");
+                if(booths.get(i).toString().equals(boothListView.getItems().get(boothListView.getSelectionModel().getSelectedIndex())))
+                {
+                    booths.delete(i);
+                    boothListView.getItems().remove(i);
+                    System.out.println(booths.printList());
+                    boothListNo.setText("There are " + numberOfBooths() + " Booths");
+                }
 
         }
+    }
+
+
+
+    public void resetBooths() {
+        boothListView.getItems().clear();
+        deleteAllBooths();
+        //updates the number of booths and ChoiceBox in patients
+        numberOfBooths();
+        boothListNo.setText("There are " + numberOfBooths() + " Booths");
+
+    }
 
     /**
-     *Center Methods
+     * Center Methods
      */
 
     public LinkedList<VaxCenter> vcenters;
 
-        public LinkedList<VaxCenter> getVaxCenter() {
+    public LinkedList<VaxCenter> getVaxCenter() {
 
-            return vcenters;
-        }
+        return vcenters;
+    }
 
-        public void addVaxCenter(VaxCenter center){
-            vcenters.addElement(center);
-        }
-
-
-
-        public void removeAllCenters(){
-            vcenters.deleteList();
-        }
+    public void addVaxCenter(VaxCenter center) {
+        vcenters.addElement(center);
+    }
 
 
-        public int numberOfCenters(){
-            int x = vcenters.listLength();
-            return x;
-        }
+    public void removeAllCenters() {
+        vcenters.deleteList();
+    }
 
-        @FXML private Label centerListNo;
+    public void removeCenter() {  //TODO
+        for (int i = 0; i < vcenters.listLength(); i++) {
+            if (vcenters.listLength() != 0) { // stops nullPointerException
+                if (vcenters.get(i).eircode.contains(centerListView.getSelectionModel().getSelectedItem().toString()))
+                    ;
+                System.out.println(i);
 
-        @FXML
-        private TextField address, eircode,centerName;
-
-        @FXML
-        ListView<String> centerListView;
-
-
-    @FXML public ChoiceBox<Object> centerChoiceBox;
-
-        public void addCenterDetails(ActionEvent event) {
-
-            centerListView.getItems().addAll( centerName.getText()+" "+address.getText() +" "+ eircode.getText() + " ");//+ parkingSpaces.getText());
-
-
-            addVaxCenter(new VaxCenter(centerName.getText(),address.getText(),eircode.getText(),booths));
-
-            System.out.println(centerName.getText()+"\n"+address.getText()+"\n"+eircode.getText()+ "\n" + booths.printList());//+"\n"+parkingSpaces.getText());
-
-
-            centerChoiceBox.getItems().clear();
-            for (int i = vcenters.listLength() - 1; i >=0; i-- ){ //reverse for loop
-
-                centerChoiceBox.getItems().addAll(vcenters.get(i).centreName);
+                vcenters.delete(i);
+                centerListView.getItems().remove(i);
             }
-
-
-            numberOfCenters();
-            centerListNo.setText("There are " + numberOfCenters() + " Centers");
-
-            boothTab.setDisable(false);
         }
-        public void resetCenters(){
-            centerChoiceBox.getItems().clear();
-            centerListView.getItems().clear();
-            removeAllCenters();
-            //updates the number of booths
-            numberOfCenters();
-            centerListNo.setText("There are " + numberOfCenters() + " Centers");
+    }
 
-            boothTab.setDisable(true);
+    public int numberOfCenters() {
+        int x = vcenters.listLength();
+        return x;
+    }
 
+    @FXML
+    private Label centerListNo;
+
+    @FXML
+    private TextField address, eircode, centerName;
+
+    @FXML
+    ListView<String> centerListView;
+
+
+    @FXML
+    public ChoiceBox<Object> centerChoiceBox;
+
+    public void addCenterDetails(ActionEvent event) {
+
+        centerListView.getItems().addAll(centerName.getText() + " " + address.getText() + " " + eircode.getText() + " ");//+ parkingSpaces.getText());
+
+
+        addVaxCenter(new VaxCenter(centerName.getText(), address.getText(), eircode.getText(), booths));
+
+        System.out.println(centerName.getText() + "\n" + address.getText() + "\n" + eircode.getText() + "\n" + booths.printList());//+"\n"+parkingSpaces.getText());
+
+
+        centerChoiceBox.getItems().clear();
+        for (int i = vcenters.listLength() - 1; i >= 0; i--) { //reverse for loop
+
+            centerChoiceBox.getItems().addAll(vcenters.get(i).centreName);
         }
 
-        public void refreshCenter(){
 
-            System.out.println(centerListView.getSelectionModel().getSelectedItem() + "\n" + booths.printList());
-            //System.out.println(centerName.getText()+"\n"+address.getText()+"\n"+eircode.getText()+ "\n" + booths.printList());
+        numberOfCenters();
+        centerListNo.setText("There are " + numberOfCenters() + " Centers");
 
-        }
+        boothTab.setDisable(false);
+    }
+
+    public void resetCenters() {
+        centerChoiceBox.getItems().clear();
+        centerListView.getItems().clear();
+        removeAllCenters();
+        //updates the number of booths
+        numberOfCenters();
+        centerListNo.setText("There are " + numberOfCenters() + " Centers");
+
+        boothTab.setDisable(true);
+
+    }
+
+    public void refreshCenter() {
+
+        System.out.println(centerListView.getSelectionModel().getSelectedItem() + "\n" + booths.printList());
+        //System.out.println(centerName.getText()+"\n"+address.getText()+"\n"+eircode.getText()+ "\n" + booths.printList());
+
+    }
 
 
+    public void deleteEverything() {
+        resetBooths();
+        resetPatients();
+        resetCenters();
+        resetAppointments();
 
-        public void deleteEverything(){
-            resetBooths();
-            resetPatients();
-            resetCenters();
-            resetAppointments();
-
-        }
+    }
 
 
     /**
-     *
      * Appointment methods
      */
 
-    @FXML private ChoiceBox<String> timeChoiceBox;
-    @FXML private ChoiceBox<Object> patientChoiceBox;
-    @FXML private ChoiceBox<String> vaccineChoiceBox;
+    @FXML
+    private ChoiceBox<String> timeChoiceBox;
+
+    @FXML
+    private ChoiceBox<String> vaccineChoiceBox;
+
+    @FXML
+    public ChoiceBox<Object> boothChoiceBox;
 
     public void timeSelection() {
-        if (timeChoiceBox.getItems().isEmpty()){
+        if (timeChoiceBox.getItems().isEmpty()) {
             for (int hour = 9; hour < 13; hour++) {
                 for (int mins = 00; mins < 60; mins = mins + 15) {
                     String time = hour + ":" + mins;
@@ -326,13 +347,12 @@ public class MainController {
     }
 
 
-
-    public void patientSelection(){
+    public void patientSelection() {
         //this is done in addPatient();
     }
 
 
-    public void vaccineSelection(){
+    public void vaccineSelection() {
         if (vaccineChoiceBox.getItems().isEmpty()) {
             vaccineChoiceBox.getItems().add(0, "Phizer");
             vaccineChoiceBox.getItems().add(1, "Moderna");
@@ -341,25 +361,45 @@ public class MainController {
     }
 
 
-public void vaccineAndTime(){
+    public void vaccineAndTime() {
         vaccineSelection();
         timeSelection();
     }
 
 
-    public static LinkedList<Appointment> appointments;
-    @FXML private ListView appointmentListView;
+    public static LinkedList<Appointment> pendingAppointments;
+    public static LinkedList<Appointment> completedAppointments;
+    @FXML
+    private ListView pendingAppointmentListView;
+    @FXML
+    private ListView completedAppointmentListView;
 
-    public void addAppointment(Appointment appointment){
-        appointments.addElement(appointment);
+
+    public void addPendingAppointment(Appointment appointment) {
+        pendingAppointments.addElement(appointment);
     }
 
-    public void removeAllAppointments(){
-        appointments.deleteList();
+    public void removeAllAppointments() {
+        pendingAppointments.deleteList();
     }
 
-    public void resetAppointments(){
-        appointmentListView.getItems().clear();
+    public void removePendingAppointment() { //TODO
+        for (int i = 0; i < pendingAppointments.listLength(); i++) {
+            if (pendingAppointments.listLength() != 0) { // stops nullPointerException
+                if (pendingAppointments.get(i).ppsNumber.contains(pendingAppointmentListView.getSelectionModel().getSelectedItem().toString()))
+                    ;
+                System.out.println(pendingAppointments.printList());
+
+                pendingAppointments.delete(i);
+                pendingAppointmentListView.getItems().remove(i);
+
+                System.out.println(pendingAppointments.printList());
+            }
+        }
+    }
+
+    public void resetAppointments() {
+        pendingAppointmentListView.getItems().clear();
         removeAllAppointments();
         //updates the number of booths
 
@@ -367,73 +407,56 @@ public void vaccineAndTime(){
 
 
     }
-    public void addAppointmentDetails(ActionEvent event){
-        appointmentListView.getItems().addAll(patientChoiceBox.getSelectionModel().getSelectedItem()+" "+timeChoiceBox.getSelectionModel().getSelectedItem()+" "+vaccineChoiceBox.getSelectionModel().getSelectedItem());
+
+    public void addPendingAppointmentDetails(ActionEvent event) {
+        pendingAppointmentListView.getItems().addAll(boothChoiceBox.getSelectionModel().getSelectedItem() + " " + timeChoiceBox.getValue() + " " + vaccineChoiceBox.getSelectionModel().getSelectedItem());
 
         //backend
-        addAppointment(new Appointment(Integer.parseInt(timeChoiceBox.getValue()),appointments.printList()));
-        System.out.println(patientChoiceBox.getSelectionModel().getSelectedItem() +"\n"+ timeChoiceBox.getSelectionModel().getSelectedItem()  +"\n"+  vaccineChoiceBox.getSelectionModel().getSelectedItem());
+        addPendingAppointment(new Appointment(Integer.parseInt(timeChoiceBox.getValue()), pendingAppointments.printList(), ppsNumber.getText()));
+        System.out.println(boothChoiceBox.getSelectionModel().getSelectedItem() + "\n" + timeChoiceBox.getSelectionModel().getSelectedItem() + "\n" + vaccineChoiceBox.getSelectionModel().getSelectedItem());
+    }
+
+    public void addCompletedAppointment(ActionEvent event) { //TODO
+
+        completedAppointmentListView.getItems().add(pendingAppointmentListView.getSelectionModel().getSelectedItem());
+
+        pendingAppointmentListView.getItems().remove(pendingAppointmentListView.getSelectionModel().getSelectedItem());
+
+
+        if (pendingAppointments.listLength() != 0) {
+            completedAppointments.addElement(pendingAppointments.get(pendingAppointmentListView.getSelectionModel().getSelectedIndex()));
+        }
+
+        for (int i = 0; i < pendingAppointments.listLength(); i++) {
+            if (pendingAppointments.listLength() != 0) { // stops nullPointerException
+                if (pendingAppointments.get(i).ppsNumber.matches(pendingAppointmentListView.getSelectionModel().getSelectedItem().toString()));
+                System.out.println(i);
+                pendingAppointments.delete(i);
+            }
+        }
+
+        System.out.println(completedAppointments.printList());
+        //removePendingAppointment(pendingAppointments.get(pendingAppointmentListView.getSelectionModel().getSelectedIndex()));
 
     }
+
+
+    //addCompletedAppointment(new Appointment(Integer.parseInt(timeChoiceBox.getValue()),pendingAppointments.printList()));
+
+
     /**
-     *
-     *Vaccination Record
-     *  *search by pps number
+     * Vaccination Record
+     * *search by pps number
      */
-@FXML ListView searchListView;
-@FXML TextField search;
-    public void searchVaccinationRecord(){
+    @FXML
+    ListView searchListView;
+    @FXML
+    TextField search;
+
+    public void searchVaccinationRecord() {
         //have the button set the search variable to what's written
         searchListView.getItems().addAll(patients.toString().matches(ppsNumber.getText()));
     }
-
-//    @FXML
-//    public void addPatientMenu(ActionEvent event) throws IOException {
-//        Parent root = FXMLLoader.load(Main.class.getResource("addpatient.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//
-//    }
-//
-//    @FXML
-//    public void addBoothMenu(ActionEvent event) throws IOException {
-//        Parent root = FXMLLoader.load(Main.class.getResource("addBooth.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//
-//    }
-//
-//    @FXML
-//    public void addCenterMenu(ActionEvent event) throws IOException {
-//        Parent root = FXMLLoader.load(Main.class.getResource("addCenter.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//
-//    }
-//
-//
-//
-//
-//    @FXML public void back(ActionEvent event)throws IOException{
-//
-//        Parent root = FXMLLoader.load(Main.class.getResource("main1.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
-//
-//    @FXML public void exit(){
-//        System.exit(0);
-//    }
-
-
 
 
 //    public void save(ActionEvent event) throws IOException {

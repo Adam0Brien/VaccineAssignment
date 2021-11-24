@@ -10,14 +10,16 @@ public class Appointment {
 
     public int time;
     public String vaccine;
+    public String ppsNumber;
 
 
-    public Appointment(int time, String vaccine) {
+    public Appointment(int time, String vaccine,String ppsNumber) {
 
         this.time = time;
 
         this.vaccine = vaccine;
 
+        this.ppsNumber= ppsNumber;
     }
 
 

@@ -15,8 +15,8 @@ class BoothTest {
 
     @BeforeEach
     public void setUp() {
-        validBooth = new Booth(1,"Floor 1","Wheelchair Access Required",appointments);
-        testBoothValidation = new Booth(-1,"F1","None Required",appointments);
+        validBooth = new Booth(1,"Floor 1","Wheelchair Access Required");
+        testBoothValidation = new Booth(-1,"F1","None Required");
 
     }
 

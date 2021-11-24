@@ -27,7 +27,7 @@ public class VaccineRecord {
         if(Utilities.max15Chars(type)){
             this.type = type;
         }else{
-            this.type = " ";
+            this.type = "Phizer";
         }
 
         if(Utilities.validBatchNo(batchNo)){

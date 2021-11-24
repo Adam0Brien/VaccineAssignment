@@ -7,7 +7,6 @@
     public  class Patient {
 
         public String name,DOB, email, ppsNumber;
-        public LinkedList<VaccineRecord> vaccine;
         public LinkedList<VaccineRecord> record;
 
 

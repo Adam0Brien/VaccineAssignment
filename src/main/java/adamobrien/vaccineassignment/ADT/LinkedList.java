@@ -10,8 +10,6 @@ public class LinkedList<E> implements Iterable<E> {
      * Adding and deleting head(most recently added) elements works fine
      *
      * -Work on
-     *
-     *
      *      search()
      *      removeRange()
      *      edit()
@@ -54,28 +52,6 @@ public class LinkedList<E> implements Iterable<E> {
             currentNode.next = currentNode.next.next;
         }
     }
-
-    //Method to delete a node in the LinkedList by KEY
-    public static void deleteByKey(LinkedList list,
-                                   int key) {
-        // Store head node
-        LinkedNode currNode = list.head, prev = null;
-
-        //
-        // CASE 1:
-        // If head node itself holds the key to be deleted
-
-        if (currNode != null && currNode.data == key) {
-            list.head = currNode.next; // Changed head
-
-            // Display the message
-            System.out.println(key + " found and deleted");
-
-            // Return the updated List
-        }
-    }
-
-
 
         public LinkedList<E> getList(){
         return this;
