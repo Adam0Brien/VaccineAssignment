@@ -116,20 +116,7 @@ public class MainController {
     }
 
 
-//    public int searchPatients(String patientName)
-//    {
-//        if (!patients.isEmpty())
-//        {
-//            for (Patient p : patients)
-//            {
-//                if (p.getName().equalsIgnoreCase(patientName))
-//                {
-//                    return patients.indexOf(p);
-//                }
-//            }
-//        }
-//        return -1;
-//    }
+
 
 
     /**
@@ -183,7 +170,7 @@ public class MainController {
 
         //adds the booths to the appointment tab
         boothChoiceBox.getItems().clear();
-        for (int i = booths.listLength() - 1; i >=0; i-- ){ //reverse for loop
+        for (int i = booths.listLength() - 1; i >=0; i-- ){ //reverse for loop to print list the right way around
 
             boothChoiceBox.getItems().addAll(booths.get(i).boothNumber);
         }
@@ -213,7 +200,7 @@ public class MainController {
     public void resetBooths() {
         boothListView.getItems().clear();
         deleteAllBooths();
-        //updates the number of booths and ChoiceBox in patients
+        //updates the number of booths
         numberOfBooths();
         boothListNo.setText("There are " + numberOfBooths() + " Booths");
 
@@ -308,7 +295,7 @@ public class MainController {
     public void refreshCenter() {
 
         System.out.println(centerListView.getSelectionModel().getSelectedItem() + "\n" + booths.printList());
-        //System.out.println(centerName.getText()+"\n"+address.getText()+"\n"+eircode.getText()+ "\n" + booths.printList());
+
 
     }
 
@@ -349,9 +336,7 @@ public class MainController {
     }
 
 
-    public void patientSelection() {
-        //this is done in addPatient();
-    }
+
 
 
     public void vaccineSelection() {
@@ -385,7 +370,7 @@ public class MainController {
         pendingAppointments.deleteList();
     }
 
-    public void removePendingAppointment() { //TODO
+    public void removePendingAppointment() {
         for (int i = 0; i < pendingAppointments.listLength(); i++) {
             if (pendingAppointments.listLength() != 0) { // stops nullPointerException
                 if (pendingAppointmentListView.getSelectionModel().getSelectedIndex() == i) {
@@ -402,9 +387,6 @@ public class MainController {
     public void resetAppointments() {
         pendingAppointmentListView.getItems().clear();
         removeAllAppointments();
-        //updates the number of booths
-
-        //centerListNo.setText("There are " + numberOfCenters() + " Booths");
 
 
     }
@@ -417,7 +399,7 @@ public class MainController {
         System.out.println(boothChoiceBox.getSelectionModel().getSelectedItem() + "\n" + timeChoiceBox.getSelectionModel().getSelectedItem() + "\n" + vaccineChoiceBox.getSelectionModel().getSelectedItem());
     }
 
-    public void addCompletedAppointment(ActionEvent event) { //TODO
+    public void addCompletedAppointment(ActionEvent event) {
 
         completedAppointmentListView.getItems().add(pendingAppointmentListView.getSelectionModel().getSelectedItem());
 
@@ -437,12 +419,12 @@ public class MainController {
         }
 
         System.out.println(completedAppointments.printList());
-        //removePendingAppointment(pendingAppointments.get(pendingAppointmentListView.getSelectionModel().getSelectedIndex()));
+
 
     }
 
 
-    //addCompletedAppointment(new Appointment(Integer.parseInt(timeChoiceBox.getValue()),pendingAppointments.printList()));
+
 
 
     /**
