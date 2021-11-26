@@ -23,7 +23,7 @@ public class VaccineAPI {
 
         public void removeVaccine(int index){
 
-            vaccines.delete(index);
+            vaccines.remove(index);
         }
 
         public void removeAllVaccines(){

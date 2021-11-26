@@ -16,17 +16,21 @@ public class LinkedListClient {
 
         greetings.addElement("hi");
 
+        greetings.addElement("Test Delete");
 
+        greetings.remove(0);
 
-        for(int i = greetings.listLength() - 1; i >= 0; i--){  //reverse for loop
+        //greetings.delete(1);
 
-            System.out.println(greetings.get(i));
-        }
-
-
-        greetings.deleteList();
 
         System.out.println(greetings.printList());
+
+//        for(int i = greetings.listLength() - 1; i >= 0; i--){  //reverse for loop
+//
+//            System.out.println(greetings.get(i));
+//        }
+
+
 
     }
 

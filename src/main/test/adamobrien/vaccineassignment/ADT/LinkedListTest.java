@@ -1,7 +1,5 @@
 package adamobrien.vaccineassignment.ADT;
 
-import adamobrien.vaccineassignment.Models.Booth;
-import adamobrien.vaccineassignment.Models.Patient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +42,7 @@ class LinkedListTest {
         validList.addElement(2);
         validList.addElement(3);
         validList.addElement(4);
-        validList.delete(0);
+        validList.remove(0);
         assertEquals(3,validList.listLength());
     }
 

@@ -7,7 +7,6 @@ import adamobrien.vaccineassignment.Models.Patient;
 import adamobrien.vaccineassignment.Models.VaxCenter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
@@ -85,16 +84,18 @@ public class MainController {
         patientListNo.setText("There are " + numberOfPatients() + " Patients");
     }
 
-    public void deletePatient() {  //TODO
+    public void deletePatient() {
         for (int i = 0; i < patients.listLength(); i++) {
             if (patients.listLength() != 0) { // stops nullPointerException
-                if (patientListView.getSelectionModel().getSelectedItem().contains(patients.get(i).ppsNumber)) ;
+                if (patientListView.getSelectionModel().getSelectedIndex() == i) {
 
-                patients.delete(i);
+                patients.remove(i);
                 patientListView.getItems().remove(i);
+
+                patientListNo.setText("There are " + numberOfPatients() + " Patients");
+                }
             }
         }
-
     }
 
 
@@ -190,17 +191,18 @@ public class MainController {
     }
 
     public void removeBooth()
-    { //TODO
+    {
         if (booths.listLength() != 0)
         { // stops nullPointerException
             for (int i = 0; i < booths.listLength(); i++)
 
-                if(booths.get(i).toString().equals(boothListView.getItems().get(boothListView.getSelectionModel().getSelectedIndex())))
+                if(boothListView.getSelectionModel().getSelectedIndex() == i)
                 {
-                    booths.delete(i);
-                    boothListView.getItems().remove(i);
-                    System.out.println(booths.printList());
-                    boothListNo.setText("There are " + numberOfBooths() + " Booths");
+                    booths.remove(i);  //removing from linked list itself
+                    boothListView.getItems().remove(i);  //removing from listview
+                    System.out.println(booths.printList());  //testing if it works
+                    boothListNo.setText("There are " + numberOfBooths() + " Booths");  //gui update
+                    boothChoiceBox.getItems().remove(i); //removes booth from choice box in appointments
                 }
 
         }
@@ -237,15 +239,15 @@ public class MainController {
         vcenters.deleteList();
     }
 
-    public void removeCenter() {  //TODO
+    public void removeCenter() {
         for (int i = 0; i < vcenters.listLength(); i++) {
             if (vcenters.listLength() != 0) { // stops nullPointerException
-                if (vcenters.get(i).eircode.contains(centerListView.getSelectionModel().getSelectedItem().toString()))
-                    ;
-                System.out.println(i);
+                if (centerListView.getSelectionModel().getSelectedIndex() == i) {
+                    vcenters.remove(i);
+                    centerListView.getItems().remove(i);
+                    centerListNo.setText("There are " + numberOfCenters() + " Centers");
 
-                vcenters.delete(i);
-                centerListView.getItems().remove(i);
+                }
             }
         }
     }
@@ -386,14 +388,13 @@ public class MainController {
     public void removePendingAppointment() { //TODO
         for (int i = 0; i < pendingAppointments.listLength(); i++) {
             if (pendingAppointments.listLength() != 0) { // stops nullPointerException
-                if (pendingAppointments.get(i).ppsNumber.contains(pendingAppointmentListView.getSelectionModel().getSelectedItem().toString()))
-                    ;
-                System.out.println(pendingAppointments.printList());
+                if (pendingAppointmentListView.getSelectionModel().getSelectedIndex() == i) {
 
-                pendingAppointments.delete(i);
-                pendingAppointmentListView.getItems().remove(i);
 
-                System.out.println(pendingAppointments.printList());
+                    pendingAppointments.remove(i);
+                    pendingAppointmentListView.getItems().remove(i);
+                    System.out.println(pendingAppointments.printList());
+                }
             }
         }
     }
@@ -431,7 +432,7 @@ public class MainController {
             if (pendingAppointments.listLength() != 0) { // stops nullPointerException
                 if (pendingAppointments.get(i).ppsNumber.matches(pendingAppointmentListView.getSelectionModel().getSelectedItem().toString()));
                 System.out.println(i);
-                pendingAppointments.delete(i);
+                pendingAppointments.remove(i);
             }
         }
 
@@ -455,31 +456,10 @@ public class MainController {
 
     public void searchVaccinationRecord() {
         //have the button set the search variable to what's written
-        searchListView.getItems().addAll(patients.toString().matches(ppsNumber.getText()));
+        if(searchListView.getItems().addAll(patients.toString().matches(ppsNumber.getText()))){
+            searchListView.getItems().add(patients.toString().matches(ppsNumber.getText()));
+        }
     }
-
-
-//    public void save(ActionEvent event) throws IOException {
-//
-//        XStream xstream = new XStream(new DomDriver());
-//        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("patients.xml"));
-//        out.writeObject(PatientAPI.patients);
-//        out.close();
-//    }
-//
-//    public void load(ActionEvent event) throws IOException, ClassNotFoundException {
-//        XStream xstream = new XStream(new DomDriver());
-//        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("patients.xml"));
-//        LinkedList<?> x = (LinkedList<?>) is.readObject();  // finish LinkedList before finish
-//        LinkedList<Patient> p = new LinkedList<>();
-//        for(Object o : x){
-//            if(o instanceof Patient){
-//                p.addElement((Patient) o);
-//            }
-//        }
-//        PatientAPI.patients = p;
-//        is.close();
-//    }
 
 
 }
