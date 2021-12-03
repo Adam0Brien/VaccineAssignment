@@ -88,7 +88,7 @@
                                <DatePicker fx:id="DOB" layoutX="50.0" layoutY="124.0" prefHeight="25.0" prefWidth="151.0" promptText="Date of Birth" />
                                <Button fx:id="addPatient" layoutX="68.0" layoutY="253.0" mnemonicParsing="false" onAction="#addPatientDetails" text="Add" />
                                <Button fx:id="deletePatient" layoutX="122.0" layoutY="253.0" mnemonicParsing="false" onAction="#deletePatient" text="Delete" />
-                               <Button fx:id="refreshPatient" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" onAction="#refreshPatientDetails" text="Refresh" />
+                               <Button fx:id="savePatient" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" text="Save" onAction="#savePatient"/>
                                <Button fx:id="resetPatient" layoutX="127.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetPatients" text="Reset" />
                               <ListView fx:id="patientListView" layoutX="274.0" layoutY="47.0" onEditStart="#addPatientDetails" prefHeight="293.0" prefWidth="298.0" />
                                <Label fx:id="patientListNo" layoutX="300.0" layoutY="340.0" prefHeight="26.0" prefWidth="178.0" text="There are 0 patients" />
@@ -103,7 +103,7 @@
                               <Button fx:id="addAppointment" layoutX="61.0" layoutY="266.0" mnemonicParsing="false" onAction="#addPendingAppointmentDetails" text="Add" />
                               <Button fx:id="deleteAppointment" layoutX="137.0" layoutY="266.0" mnemonicParsing="false" onAction="#removePendingAppointment" text="Cancel App" />
                               <ListView fx:id="pendingAppointmentListView" layoutX="239.0" layoutY="47.0" prefHeight="281.0" prefWidth="176.0" />
-                              <ChoiceBox fx:id="boothChoiceBox" layoutX="53.0" layoutY="47.0" prefWidth="150.0" />
+                              <ChoiceBox fx:id="patientsChoiceBox" layoutX="53.0" layoutY="47.0" prefWidth="150.0" />
                               <ChoiceBox fx:id="timeChoiceBox" layoutX="54.0" layoutY="105.0" prefWidth="150.0" />
                               <ChoiceBox fx:id="vaccineChoiceBox" layoutX="54.0" layoutY="168.0" prefWidth="150.0" />
                               <ListView fx:id="completedAppointmentListView" layoutX="443.0" layoutY="47.0" prefHeight="281.0" prefWidth="183.0" />

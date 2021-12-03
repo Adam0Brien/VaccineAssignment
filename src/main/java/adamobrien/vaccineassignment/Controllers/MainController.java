@@ -5,14 +5,20 @@ import adamobrien.vaccineassignment.Models.Appointment;
 import adamobrien.vaccineassignment.Models.Booth;
 import adamobrien.vaccineassignment.Models.Patient;
 import adamobrien.vaccineassignment.Models.VaxCenter;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class MainController {
+public class MainController implements Serializable {
+
+
 
 
     public MainController() {
@@ -65,28 +71,44 @@ public class MainController {
 
     @FXML
     private ListView<String> patientListView;
+    @FXML ChoiceBox patientsChoiceBox;
 
     public void addPatientDetails(ActionEvent event) {
         //code to set get the datepicker working
         LocalDate myDate = DOB.getValue();
         String myFormattedDate = myDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
 
-        //frontend adding of patients
-        patientListView.getItems().addAll(patientName.getText() + " " + myFormattedDate + " " + email.getText() + " " + ppsNumber.getText() + "\n" + pendingAppointments.printList());
 
+        Patient patient = new Patient(patientName.getText(), ppsNumber.getText(), email.getText(), DOB.getId());
+        //frontend adding of patients
+
+
+        patientListView.getItems().add(patient.toString());
         //backend adding of patients
 
-        addPatient(new Patient(patientName.getText(), ppsNumber.getText(), email.getText(), DOB.getId()));
+        addPatient(patient);
         System.out.println(patientName.getText() + "\n" + ppsNumber.getText() + "\n" + email.getText() + "\n" + DOB.getId());
 
         //counts the patients
         numberOfPatients();
         patientListNo.setText("There are " + numberOfPatients() + " Patients");
+
+
+
+        patientsChoiceBox.getItems().clear();
+        for (int i = patients.listLength() - 1; i >=0; i-- ) {
+
+            patientsChoiceBox.getItems().add(patients.get(i).name);
+        }
     }
+
+
+
+
 
     public void deletePatient() {
         for (int i = 0; i < patients.listLength(); i++) {
-            if (patients.listLength() != 0) { // stops nullPointerException
+            if (patients.isEmpty()) { // stops nullPointerException
                 if (patientListView.getSelectionModel().getSelectedIndex() == i) {
 
                 patients.remove(i);
@@ -168,18 +190,13 @@ public class MainController {
         numberOfBooths();
         boothListNo.setText("There are " + numberOfBooths() + " Booths");
 
-        //adds the booths to the appointment tab
-        boothChoiceBox.getItems().clear();
-        for (int i = booths.listLength() - 1; i >=0; i-- ){ //reverse for loop to print list the right way around
 
-            boothChoiceBox.getItems().addAll(booths.get(i).boothNumber);
-        }
 
     }
 
     public void removeBooth()
     {
-        if (booths.listLength() != 0)
+        if (booths.isEmpty())
         { // stops nullPointerException
             for (int i = 0; i < booths.listLength(); i++)
 
@@ -189,7 +206,7 @@ public class MainController {
                     boothListView.getItems().remove(i);  //removing from listview
                     System.out.println(booths.printList());  //testing if it works
                     boothListNo.setText("There are " + numberOfBooths() + " Booths");  //gui update
-                    boothChoiceBox.getItems().remove(i); //removes booth from choice box in appointments
+
                 }
 
         }
@@ -392,11 +409,11 @@ public class MainController {
     }
 
     public void addPendingAppointmentDetails(ActionEvent event) {
-        pendingAppointmentListView.getItems().addAll(boothChoiceBox.getSelectionModel().getSelectedItem() + " " + timeChoiceBox.getValue() + " " + vaccineChoiceBox.getSelectionModel().getSelectedItem());
+        pendingAppointmentListView.getItems().addAll(patientsChoiceBox.getSelectionModel().getSelectedItem() + " " + timeChoiceBox.getValue() + " " + vaccineChoiceBox.getSelectionModel().getSelectedItem());
 
         //backend
         addPendingAppointment(new Appointment(Integer.parseInt(timeChoiceBox.getValue()), pendingAppointments.printList(), ppsNumber.getText()));
-        System.out.println(boothChoiceBox.getSelectionModel().getSelectedItem() + "\n" + timeChoiceBox.getSelectionModel().getSelectedItem() + "\n" + vaccineChoiceBox.getSelectionModel().getSelectedItem());
+        System.out.println(patientsChoiceBox.getSelectionModel().getSelectedItem() + "\n" + timeChoiceBox.getSelectionModel().getSelectedItem() + "\n" + vaccineChoiceBox.getSelectionModel().getSelectedItem());
     }
 
     public void addCompletedAppointment(ActionEvent event) {
@@ -411,17 +428,15 @@ public class MainController {
         }
 
         for (int i = 0; i < pendingAppointments.listLength(); i++) {
-            if (pendingAppointments.listLength() != 0) { // stops nullPointerException
-                if (pendingAppointments.get(i).ppsNumber.matches(pendingAppointmentListView.getSelectionModel().getSelectedItem().toString()));
-                System.out.println(i);
+
                 pendingAppointments.remove(i);
             }
         }
 
-        System.out.println(completedAppointments.printList());
 
 
-    }
+
+
 
 
 
@@ -440,6 +455,36 @@ public class MainController {
         //have the button set the search variable to what's written
         if(searchListView.getItems().addAll(patients.toString().matches(ppsNumber.getText()))){
             searchListView.getItems().add(patients.toString().matches(ppsNumber.getText()));
+        }
+    }
+
+
+    public void loadPatient(ActionEvent event) throws Exception {
+        try {
+            System.out.println(patients.printList());
+            //biddersListView.getItems().  ASK PETER HOW TO UPDATE THE LISTVIEW AFTER LOADING......
+            XStream xstream = new XStream(new DomDriver());
+            xstream.addPermission(AnyTypePermission.ANY);
+            ObjectInputStream is = xstream.createObjectInputStream(new FileReader("patients.xml"));
+            patients = (LinkedList<Patient>) is.readObject();
+            is.close();
+
+
+        } catch (Exception e) {
+            System.out.println("Error in reading this file : " + e);
+        }
+    }
+
+    public void savePatient(ActionEvent event) throws Exception {
+        try {
+            XStream xstream = new XStream(new DomDriver());
+
+            ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("patients.xml"));
+
+            out.writeObject(patients);
+            out.close();
+        } catch (Exception e) {
+            System.out.println("Error writing this file : " + e);
         }
     }
 

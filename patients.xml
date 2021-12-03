@@ -1,3 +1,14 @@
 <object-stream>
-  <adamobrien.vaccineassignment.ADT.LinkedList/>
+  <adamobrien.vaccineassignment.ADT.LinkedList>
+    <head>
+      <data>0</data>
+      <contents class="adamobrien.vaccineassignment.Models.Patient">
+        <name>Adam</name>
+        <DOB>1234567XX</DOB>
+        <email>ma@gmail.com</email>
+        <ppsNumber>0000000XX</ppsNumber>
+        <record/>
+      </contents>
+    </head>
+  </adamobrien.vaccineassignment.ADT.LinkedList>
 </object-stream>
